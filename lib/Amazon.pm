@@ -4,6 +4,17 @@ use warnings;
 use utf8;
 use Smart::Args;
 
+use constant SHIP_METHOD => {
+    NORMAL_SHIP => 0,
+    OISOGI_SHIP => 200,
+};
+
+use constant PURCHAS_METHOD => {
+    CREDIT_CARD => 0,
+    CACHE       => 200,
+    ATM         => 100,
+};
+
 sub new {
     my $class = shift;
     bless {

@@ -59,5 +59,11 @@ subtest 'カートに商品を追加できる' => sub {
     throws_ok { $amazon->add_item($item_name, 3) } qr/ERROR: no stock/, '在庫数より多くなるようにカートに追加しようとすると例外を投げること';
 };
 
-done_testing;
+subtest '発送・支払い方法の手数料定数' => sub {
+    is defined Amazon->SHIP_METHOD, 1, '発送方法が定義されていること';
+    is defined Amazon->PURCHAS_METHOD, 1, '支払い方法が定義されていること';
+    is Amazon->SHIP_METHOD->{NORMAL_SHIP}, 0, '通常配送は0円であること';
+    is Amazon->SHIP_METHOD->{OISOGI_SHIP}, 200, '当日お急ぎ便は200円であること';
+};
 
+done_testing;
