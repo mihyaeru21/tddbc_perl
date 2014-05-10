@@ -41,6 +41,9 @@ subtest 'カートに商品を追加できる' => sub {
 
     $amazon->add_item($item_name, 2);
     is $amazon->get_amount($item_name), 3, 'さらに追加した分が加算されている';
+
+    $amazon->add_item($item_name);
+    is $amazon->get_amount($item_name), 4, '第二引数を省略すると1追加する扱いにする';
 };
 
 #subtest 'カート内の特定商品の個数を確認できる' => sub {

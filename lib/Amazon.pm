@@ -2,6 +2,7 @@ package Amazon;
 use strict;
 use warnings;
 use utf8;
+use Smart::Args;
 
 sub new {
     my $class = shift;
@@ -25,7 +26,12 @@ sub get_amount {
 }
 
 sub add_item {
-    my ($self, $item_name, $amount) = @_;
+    args_pos(
+        my $self,
+        my $item_name => { isa => 'Str', optional => 0 },
+        my $amount => { isa => 'Str', optional => 1, default => 1 },
+    );
+
     $self->{cart}->{$item_name} += $amount;
 }
 
