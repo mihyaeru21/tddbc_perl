@@ -26,8 +26,9 @@ sub new {
                 stock        => 5,
             }
         },
-        cart => {
-        },
+        cart => {},
+        ship_method     => 'NORMAL_SHIP',
+        purchase_method => 'CACHE',
     }, $class;
 }
 
@@ -67,5 +68,19 @@ sub _die_with_unstored_item {
     die 'ERROR: unstored item' unless defined $self->{items}->{$item_name};
 }
 
-1;
+sub get_purchase_method{
+    my $self = shift;
 
+    return {
+        SHIP_METHOD    => $self->{ship_method},
+        PURCHAS_METHOD => $self->{purchase_method},
+    };
+}
+
+sub set_purchase_method {
+    my( $self, $methods ) = @_;
+    $self->{ship_method} = $methods->{ship};
+    $self->{purchase_method} = $methods->{purchase};
+};
+
+1;
