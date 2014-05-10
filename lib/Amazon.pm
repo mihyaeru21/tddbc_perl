@@ -5,7 +5,9 @@ use utf8;
 
 sub new {
     my $class = shift;
-    bless {}, $class;
+    bless {
+        items => {},
+    }, $class;
 }
 
 1;

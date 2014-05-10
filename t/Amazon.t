@@ -13,5 +13,10 @@ subtest 'クラスの基本的な要素' => sub {
     can_ok $amazon, qw( new );
 };
 
+subtest 'アイテムあるよ' => sub {
+    my $amazon = Amazon->new();
+    is defined $amazon->{items}, 1, '商品ハッシュが定義されている';
+};
+
 done_testing;
 
