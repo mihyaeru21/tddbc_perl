@@ -36,11 +36,8 @@ sub add_item {
         my $amount => { isa => 'Str', optional => 1, default => 1 },
     );
 
-    my $now_amount = $self->get_amount($item_name);
-    $now_amount += $amount;
-    if ($now_amount > $self->{items}->{$item_name}->{stock}) {
-        die 'ERROR: no stock';
-    }
+    die 'ERROR: no stock'
+        if $self->get_amount($item_name) + $amount > $self->{items}->{$item_name}->{stock};
 
     $self->{cart}->{$item_name} += $amount;
 }
