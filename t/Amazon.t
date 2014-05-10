@@ -16,6 +16,14 @@ subtest 'クラスの基本的な要素' => sub {
 subtest 'アイテムあるよ' => sub {
     my $amazon = Amazon->new();
     is defined $amazon->{items}, 1, '商品ハッシュが定義されている';
+    # TODO: valuesまでテストするの微妙かもしれない。構造のみテストしたい
+    is_deeply $amazon->{items}->{perfect_php},
+        {
+            name         => 'Perlfect PHP',
+            price        => 3600,
+            release_date => '2010-11-01',
+            stock        => 2,
+        }, '問題1のデータを持っていること';
 };
 
 done_testing;
