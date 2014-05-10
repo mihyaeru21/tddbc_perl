@@ -10,7 +10,7 @@ subtest 'クラスの基本的な要素' => sub {
     use_ok 'Amazon';
     my $amazon = Amazon->new();
     isa_ok $amazon, 'Amazon';
-    can_ok $amazon, qw( new );
+    can_ok $amazon, qw( new get_amount add_item );
 };
 
 subtest 'アイテムあるよ' => sub {
@@ -30,6 +30,23 @@ subtest 'カートあるよ' => sub {
     my $amazon = Amazon->new();
     is defined $amazon->{cart}, 1, 'カートハッシュが定義されている';
 };
+
+subtest 'カートに商品を追加できる' => sub {
+    my $amazon = Amazon->new();
+    my $item_name = 'perfect_php';
+    is $amazon->get_amount($item_name), 0, '最初は0になっている';
+
+    $amazon->add_item($item_name, 1);
+    is $amazon->get_amount($item_name), 1, '追加した分が加算されている';
+
+    $amazon->add_item($item_name, 2);
+    is $amazon->get_amount($item_name), 3, 'さらに追加した分が加算されている';
+};
+
+#subtest 'カート内の特定商品の個数を確認できる' => sub {
+#    my $amazon = Amazon->new();
+#    is $amazon->get_amount('perfect_php'),
+#};
 
 done_testing;
 

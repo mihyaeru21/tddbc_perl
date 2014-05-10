@@ -19,5 +19,16 @@ sub new {
     }, $class;
 }
 
+sub get_amount {
+    my ($self, $item_name) = @_;
+    return $self->{cart}->{$item_name} // 0;
+}
+
+sub add_item {
+    my ($self, $item_name, $amount) = @_;
+    $self->{cart}->{$item_name} += $amount;
+}
+
+
 1;
 
