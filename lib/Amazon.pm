@@ -20,6 +20,14 @@ sub new {
     }, $class;
 }
 
+sub get_stock {
+    args_pos(
+        my $self,
+        my $item_name => { isa => 'Str', optional => 0 },
+    );
+    return $self->{items}->{$item_name}->{stock};
+}
+
 sub get_amount {
     args_pos(
         my $self,
@@ -40,6 +48,7 @@ sub add_item {
         if $self->get_amount($item_name) + $amount > $self->{items}->{$item_name}->{stock};
 
     $self->{cart}->{$item_name} += $amount;
+    $self->{items}->{$item_name}->{stock} -= $amount;
 }
 
 sub _die_with_unstored_item {
