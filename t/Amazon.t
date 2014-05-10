@@ -31,6 +31,17 @@ subtest 'カートあるよ' => sub {
     is defined $amazon->{cart}, 1, 'カートハッシュが定義されている';
 };
 
+subtest 'get_amount()のバリデーション' => sub {
+    my $amazon = Amazon->new();
+    dies_ok { $amazon->get_amount() }, '引数が無いときに例外を投げること';
+};
+
+subtest 'Amazonが扱っていない商品について' => sub {
+    my $amazon = Amazon->new();
+    dies_ok { $amazon->get_amount('hoge') }, 'amazonが扱っていない商品が指定された時に例外を投げること';
+    dies_ok { $amazon->add_item('hoge') }, 'amazonが扱っていない商品をカートに入れようとすると例外を投げること';
+};
+
 subtest 'カートに商品を追加できる' => sub {
     my $amazon = Amazon->new();
     my $item_name = 'perfect_php';
@@ -45,11 +56,6 @@ subtest 'カートに商品を追加できる' => sub {
     $amazon->add_item($item_name);
     is $amazon->get_amount($item_name), 4, '第二引数を省略すると1追加する扱いにする';
 };
-
-#subtest 'カート内の特定商品の個数を確認できる' => sub {
-#    my $amazon = Amazon->new();
-#    is $amazon->get_amount('perfect_php'),
-#};
 
 done_testing;
 
