@@ -32,4 +32,11 @@ pkは商品の英語名
 
 
 対応表
+商品   item
+カート cart
+価格   price
+商品名 item_name
+発売日 release_date
+在庫   stock_amount
+購入数 procure_amount
 ```
