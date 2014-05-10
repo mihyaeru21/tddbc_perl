@@ -26,5 +26,10 @@ subtest 'アイテムあるよ' => sub {
         }, '問題1のデータを持っていること';
 };
 
+subtest 'カートあるよ' => sub {
+    my $amazon = Amazon->new();
+    is defined $amazon->{cart}, 1, 'カートハッシュが定義されている';
+};
+
 done_testing;
 

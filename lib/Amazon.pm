@@ -14,6 +14,8 @@ sub new {
                 stock        => 2,
             }
         },
+        cart => {
+        },
     }, $class;
 }
 
