@@ -1,5 +1,7 @@
 # Perl限定TDDBC
 
+## 2
+
 * 言葉の対応表を作成する
 * Amazonクラスに商品データを持たせる
 * Amazonクラスにカートデータを持たせる
@@ -40,3 +42,29 @@ pkは商品の英語名
 在庫   stock_amount
 購入数 procure_amount
 ```
+
+
+## 2
+
+* 配送・支払方法の定数をクラスに持たせる
+* 配送・支払方法を選択する処理
+* 料金算出処理
+
+```
+$amazon->purchase('配送方法', '支払い方法');
+
+$amazon->set_purchase_method({
+      ship     => 'hoge',
+          purchase => 'fuga',
+});
+my $price = $amazon->get_total_price();
+
+* 配送・支払い方法を定数にする
+* 手数料
+
+{
+      NORMAL_SHIP => 0,
+          OISOGI_SHIP => 200,
+}
+```
+
