@@ -22,7 +22,7 @@ subtest 'アイテムあるよ' => sub {
             name         => 'Perlfect PHP',
             price        => 3600,
             release_date => '2010-11-01',
-            stock        => 2,
+            stock        => 5,
         }, '問題1のデータを持っていること';
 };
 
@@ -38,8 +38,8 @@ subtest 'get_amount()のバリデーション' => sub {
 
 subtest 'Amazonが扱っていない商品について' => sub {
     my $amazon = Amazon->new();
-    dies_ok { $amazon->get_amount('hoge') }, 'amazonが扱っていない商品が指定された時に例外を投げること';
-    dies_ok { $amazon->add_item('hoge') }, 'amazonが扱っていない商品をカートに入れようとすると例外を投げること';
+    throws_ok { $amazon->get_amount('hoge') } qr/ERROR: unstored item/, 'amazonが扱っていない商品が指定された時に例外を投げること';
+    throws_ok { $amazon->add_item('hoge') } qr/ERROR: unstored item/, 'amazonが扱っていない商品をカートに入れようとすると例外を投げること';
 };
 
 subtest 'カートに商品を追加できる' => sub {
@@ -47,14 +47,13 @@ subtest 'カートに商品を追加できる' => sub {
     my $item_name = 'perfect_php';
     is $amazon->get_amount($item_name), 0, '最初は0になっている';
 
-    $amazon->add_item($item_name, 1);
-    is $amazon->get_amount($item_name), 1, '追加した分が加算されている';
+    $amazon->add_item($item_name);
+    is $amazon->get_amount($item_name), 1, '第二引数を省略すると1追加する扱いにする';
 
     $amazon->add_item($item_name, 2);
     is $amazon->get_amount($item_name), 3, 'さらに追加した分が加算されている';
 
-    $amazon->add_item($item_name);
-    is $amazon->get_amount($item_name), 4, '第二引数を省略すると1追加する扱いにする';
+    throws_ok { $amazon->add_item($item_name, 3) } qr/ERROR: no stock/, '在庫数より多くなるようにカートに追加しようとすると例外を投げること';
 };
 
 done_testing;

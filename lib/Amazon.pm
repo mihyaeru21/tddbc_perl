@@ -12,7 +12,7 @@ sub new {
                 name         => 'Perlfect PHP',
                 price        => 3600,
                 release_date => '2010-11-01',
-                stock        => 2,
+                stock        => 5,
             }
         },
         cart => {
@@ -35,7 +35,13 @@ sub add_item {
         my $item_name => { isa => 'Str', optional => 0 },
         my $amount => { isa => 'Str', optional => 1, default => 1 },
     );
-    _die_with_unstored_item($self, $item_name);
+
+    my $now_amount = $self->get_amount($item_name);
+    $now_amount += $amount;
+    if ($now_amount > $self->{items}->{$item_name}->{stock}) {
+        die 'ERROR: no stock';
+    }
+
     $self->{cart}->{$item_name} += $amount;
 }
 
