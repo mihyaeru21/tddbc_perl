@@ -81,6 +81,13 @@ sub set_purchase_method {
     my( $self, $methods ) = @_;
     $self->{ship_method} = $methods->{ship};
     $self->{purchase_method} = $methods->{purchase};
-};
+}
+
+sub get_commission {
+    my ($self) = @_;
+    my $ship = $self->{ship_method};
+    my $purchase = $self->{purchase_method};
+    return SHIP_METHOD->{$ship} + PURCHAS_METHOD->{$purchase};
+}
 
 1;

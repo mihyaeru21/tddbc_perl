@@ -10,7 +10,7 @@ subtest 'クラスの基本的な要素' => sub {
     use_ok 'Amazon';
     my $amazon = Amazon->new();
     isa_ok $amazon, 'Amazon';
-    can_ok $amazon, qw( new get_amount add_item get_stock get_purchase_method set_purchase_method );
+    can_ok $amazon, qw( new get_amount add_item get_stock get_purchase_method set_purchase_method get_commission);
 };
 
 subtest 'アイテムあるよ' => sub {
@@ -72,7 +72,9 @@ subtest '発送・支払い方法の選択処理' => sub {
         {
             SHIP_METHOD => 'NORMAL_SHIP',
             PURCHAS_METHOD => 'CACHE',
-        }, '方法が選択されなければ、通常配送ATM代引き支払いが選択されること';
+        }, '方法が選択されなければ、通常配送代引き支払いが選択されること';
+
+    is $amazon->get_commission, 200, '通常配送代引き200円';
 
     $amazon->set_purchase_method({
         ship     => 'OISOGI_SHIP',
@@ -83,6 +85,9 @@ subtest '発送・支払い方法の選択処理' => sub {
             SHIP_METHOD => 'OISOGI_SHIP',
             PURCHAS_METHOD => 'ATM',
         }, '配送方法が変更されること';
+
+    is $amazon->get_commission, 300, 'お急ぎ便ATM300円';
+
 };
 
 done_testing;
